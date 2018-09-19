@@ -1,11 +1,11 @@
-// progtest.cc
+// progtest.cc 
 //      Test routines for demonstrating that Nachos can load
-//      a user program and execute it.
+//      a user program and execute it.  
 //
 //      Also, routines for testing the Console hardware device.
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation
+// All rights reserved.  See copyright.h for copyright notice and limitation 
 // of liability and disclaimer of warranty provisions.
 
 #include "copyright.h"
@@ -79,35 +79,24 @@ WriteDoneHandler (void *arg)
 void
 ConsoleTest (const char *in, const char *out)
 {
-  char ch;
-   char chev_left = '<';
-   char chev_right = '>';
+    char ch;
 
-   readAvail = new Semaphore("read avail", 0);
-   writeDone = new Semaphore("write done", 0);
-   console = new Console(in, out, ReadAvailHandler, WriteDoneHandler, 0);
+    readAvail = new Semaphore ("read avail", 0);
+    writeDone = new Semaphore ("write done", 0);
+    console = new Console (in, out, ReadAvailHandler, WriteDoneHandler, 0);
 
-   for (;; ){
-       // Wait for character to arrive
-       readAvail->P();
-       ch = console->GetChar();
-       if (ch == '\n') {
-           console->PutChar(ch);
-           writeDone->P();
-       } else if (ch == EOF || ch == 'q') {
-           printf("Nothing more, au revoir!\n");
-           break;
-       } else { // Classic echo
-           console->PutChar(chev_left);
-           writeDone->P();
-           console->PutChar(ch);
-           writeDone->P();
-           console->PutChar(chev_right);
-           writeDone->P();   // Wait for write to finish
-
-       }
-   }
-   delete console;
-   delete readAvail;
-   delete writeDone;
+    for (;;)
+      {
+	  readAvail->P ();	// wait for character to arrive
+	  ch = console->GetChar ();
+	  console->PutChar (ch);	// echo it!
+	  writeDone->P ();	// wait for write to finish
+	  if (ch == 'q') {
+	      printf ("Nothing more, bye!\n");
+	      break;		// if q, quit
+	  }
+      }
+    delete console;
+    delete readAvail;
+    delete writeDone;
 }
