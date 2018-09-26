@@ -60,8 +60,8 @@ __start:
 
 *//Code assembleur pour putchar*****/
 
- .globl PutChar
- .ent	PutChar
+  .globl PutChar
+  .ent	PutChar
 PutChar:
  addiu $2,$0,SC_PutChar
  syscall
