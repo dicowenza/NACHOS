@@ -5,7 +5,6 @@
 #include "utility.h"
 #include "console.h"
 
-
 class SynchConsole:dontcopythis {
 	public:
 		SynchConsole(const char *readFile, const char *writeFile); // initialize the hardware console device
@@ -17,5 +16,6 @@ class SynchConsole:dontcopythis {
 	private:
 		Console *console;
 };
+
 #endif // SYNCHCONSOLE_H
 #endif // CHANGED
