@@ -13,7 +13,6 @@ static void WriteDoneHandler(void *arg) { (void) arg; writeDone->V(); }
 SynchConsole::SynchConsole(const char *in, const char *out) {
 	readAvail = new Semaphore("read avail", 0);
 	writeDone = new Semaphore("write done", 0);
-
 	console = new Console(in, out, ReadAvailHandler, WriteDoneHandler, 0);
 }
 
@@ -24,16 +23,16 @@ SynchConsole::~SynchConsole() {
 }
 
 void SynchConsole::SynchPutChar(int ch) {
-	//On ecrit le caractere
+	// On ecrit le caractere
 	console->PutChar(ch);
-	//on attend que l'ecriture se termine
+	// On attend que l'ecriture se termine
 	writeDone->P();
 }
 
 int SynchConsole::SynchGetChar() {
-	//on attend qu'il y ai quelque chose à lire
+	// On attend qu'il y ai quelque chose à lire
 	readAvail->P();
-	//on recupere le caractere à lire
+	// On recupere le caractere à lire
 	int ch = (int)console->GetChar();
 	return ch;
 }

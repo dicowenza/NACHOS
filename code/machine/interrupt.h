@@ -93,14 +93,9 @@ class Interrupt:dontcopythis {
 
     void Halt(); 			// quit and print out stats
 
-		//----------------------------------------------------------------------
-		// Interrupt::Halt
-		// 	Shut down Nachos cleanly, printing out performance statistics.
-		//----------------------------------------------------------------------
-
-		#ifdef CHANGED
-		void PutChar(int c);
-		#endif
+	#ifdef CHANGED
+	void PutChar(int c);
+	#endif
 
     void YieldOnReturn();		// cause a context switch on return
 					// from an interrupt handler

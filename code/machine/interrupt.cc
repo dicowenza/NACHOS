@@ -255,15 +255,14 @@ Interrupt::Halt()
 
 //----------------------------------------------------------------------
 // Interrupt::PutChar
-// 	PutChar.
 //----------------------------------------------------------------------
-void
-Interrupt::PutChar(int c)
-{
+#ifdef CHANGED
+void Interrupt::PutChar(int c) {
     printf("PutChar %c\n", (char)c);
     stats->Print();
     Cleanup();     // Never returns.
 }
+#endif
 
 //----------------------------------------------------------------------
 // Interrupt::Schedule
