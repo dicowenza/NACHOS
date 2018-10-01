@@ -1,4 +1,4 @@
-// interrupt.h 
+// interrupt.h
 //	Data structures to emulate low-level interrupt hardware.
 //
 //	The hardware provides a routine (SetLevel) to enable or disable
@@ -6,30 +6,30 @@
 //
 //	In order to emulate the hardware, we need to keep track of all
 //	interrupts the hardware devices would cause, and when they
-//	are supposed to occur.  
+//	are supposed to occur.
 //
 //	This module also keeps track of simulated time.  Time advances
-//	only when the following occur: 
+//	only when the following occur:
 //		interrupts are re-enabled
 //		a user instruction is executed
 //		there is nothing in the ready queue
 //
-//	As a result, unlike real hardware, interrupts (and thus time-slice 
+//	As a result, unlike real hardware, interrupts (and thus time-slice
 //	context switches) cannot occur anywhere in the code where interrupts
-//	are enabled, but rather only at those places in the code where 
+//	are enabled, but rather only at those places in the code where
 //	simulated time advances (so that it becomes time to invoke an
 //	interrupt in the hardware simulation).
 //
 //	NOTE: this means that incorrectly synchronized code may work
 //	fine on this hardware simulation (even with randomized time slices),
 //	but it wouldn't work on real hardware.  (Just because we can't
-//	always detect when your program would fail in real life, does not 
+//	always detect when your program would fail in real life, does not
 //	mean it's ok to write incorrectly synchronized code!)
 //
 //  DO NOT CHANGE -- part of the machine emulation
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+// All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
 #ifndef INTERRUPT_H
@@ -42,14 +42,14 @@
 enum IntStatus { IntOff, IntOn };
 
 // Nachos can be running kernel code (SystemMode), user code (UserMode),
-// or there can be no runnable thread, because the ready list 
+// or there can be no runnable thread, because the ready list
 // is empty (IdleMode).
 enum MachineStatus {IdleMode, SystemMode, UserMode};
 
 // IntType records which hardware device generated an interrupt.
 // In Nachos, we support a hardware timer device, a disk, a console
 // display and keyboard, and a network.
-enum IntType { TimerInt, DiskInt, ConsoleWriteInt, ConsoleReadInt, 
+enum IntType { TimerInt, DiskInt, ConsoleWriteInt, ConsoleReadInt,
 				NetworkSendInt, NetworkRecvInt};
 
 // The following class defines an interrupt that is scheduled
@@ -79,21 +79,30 @@ class Interrupt:dontcopythis {
   public:
     Interrupt();			// initialize the interrupt simulation
     ~Interrupt();			// de-allocate data structures
-    
-    IntStatus SetLevel(IntStatus level);// Disable or enable interrupts 
+
+    IntStatus SetLevel(IntStatus level);// Disable or enable interrupts
 					// and return previous setting.
 
     void Enable();			// Enable interrupts.
     IntStatus getLevel() {return level;}// Return whether interrupts
 					// are enabled or disabled
-    
-    void Idle(); 			// The ready queue is empty, roll 
-					// simulated time forward until the 
+
+    void Idle(); 			// The ready queue is empty, roll
+					// simulated time forward until the
 					// next interrupt
 
     void Halt(); 			// quit and print out stats
-    
-    void YieldOnReturn();		// cause a context switch on return 
+
+		//----------------------------------------------------------------------
+		// Interrupt::Halt
+		// 	Shut down Nachos cleanly, printing out performance statistics.
+		//----------------------------------------------------------------------
+
+		#ifdef CHANGED
+		void PutChar(int c);
+		#endif
+
+    void YieldOnReturn();		// cause a context switch on return
 					// from an interrupt handler
 
     MachineStatus getStatus() { return status; } // idle, kernel, user
@@ -110,7 +119,7 @@ class Interrupt:dontcopythis {
     void Schedule(VoidFunctionPtr handler,// Schedule an interrupt to occur
 	void *arg, long long when, IntType type);// at time ``when''.  This is called
     					// by the hardware device simulators.
-    
+
     void OneTick();       		// Advance simulated time
 
   private:

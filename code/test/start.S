@@ -58,7 +58,7 @@ __start:
  * -------------------------------------------------------------
  */
 
-*//Code assembleur pour putchar*****/
+//Code assembleur pour putchar
 
   .globl PutChar
   .ent	PutChar
