@@ -66,6 +66,8 @@ UpdatePC ()
 //----------------------------------------------------------------------
 
 void ExceptionHandler (ExceptionType which) {
+  
+	SynchConsole *sconsole = new SynchConsole(NULL, NULL);
 	int type = machine->ReadRegister(2);
 
 	switch (which) {
@@ -81,9 +83,8 @@ void ExceptionHandler (ExceptionType which) {
 				#ifdef CHANGED
 				case SC_PutChar:
  				{
-					DEBUG('s', "DebugPutChar \n");
+					DEBUG('s', "PutChar \n");
 					int c = machine->ReadRegister(4);
-					SynchConsole *sconsole = new SynchConsole(NULL, NULL);
 					// interrupt->PutChar(c);
 					sconsole->SynchPutChar(c);
 					delete sconsole;
