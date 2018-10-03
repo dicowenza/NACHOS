@@ -23,9 +23,7 @@ SynchConsole::~SynchConsole() {
 }
 
 void SynchConsole::SynchPutChar(int ch) {
-	// On ecrit le caractere
 	console->PutChar(ch);
-	// On attend que l'ecriture se termine
 	writeDone->P();
 }
 

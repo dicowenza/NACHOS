@@ -21,6 +21,9 @@
 
 #ifdef USER_PROGRAM
 #include "progtest.h"
+#ifdef CHANGED
+#include "synchconsole.h"
+#endif
 #endif
 
 
@@ -118,6 +121,9 @@ main (int argc, char **argv)
 	  if (!strcmp (*argv, "-x"))
 	    {			// run a user program
 		ASSERT (argc > 1);
+		#ifdef CHANGED
+		synchconsole = new SynchConsole(NULL, NULL);
+		#endif
 		StartProcess (*(argv + 1));
 		argCount = 2;
 	    }

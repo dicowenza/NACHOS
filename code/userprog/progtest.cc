@@ -127,11 +127,10 @@ void SynchConsoleTest (const char *in, const char *out) {
 
   if (ch == '\n') {
     test_synchconsole->SynchPutChar(ch);
-    writeDone->P();
   } 
   else if (ch == EOF || ch == 'q') {
     fprintf(stderr, "EOF detected in SynchConsole!\n");
-  } 
+  }
   else {
       test_synchconsole->SynchPutChar(chev_left);
       test_synchconsole->SynchPutChar(ch);
