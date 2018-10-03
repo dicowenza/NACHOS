@@ -93,10 +93,6 @@ class Interrupt:dontcopythis {
 
     void Halt(); 			// quit and print out stats
 
-	#ifdef CHANGED
-	void PutChar(int c);
-	#endif
-
     void YieldOnReturn();		// cause a context switch on return
 					// from an interrupt handler
 

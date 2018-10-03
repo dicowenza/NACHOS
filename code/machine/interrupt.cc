@@ -253,16 +253,6 @@ Interrupt::Halt()
     Cleanup();     // Never returns.
 }
 
-//----------------------------------------------------------------------
-// Interrupt::PutChar
-//----------------------------------------------------------------------
-#ifdef CHANGED
-void Interrupt::PutChar(int c) {
-    printf("PutChar %c\n", (char)c);
-    stats->Print();
-    Cleanup();     // Never returns.
-}
-#endif
 
 //----------------------------------------------------------------------
 // Interrupt::Schedule
