@@ -111,7 +111,7 @@ void ExceptionHandler (ExceptionType which) {
 			ASSERT (FALSE);
 	}
 }
-
+#ifdef CHANGED
 static void copyStringFromMachine(int from, char *to, unsigned int size) {
   int i;
   int ch;
@@ -123,3 +123,4 @@ static void copyStringFromMachine(int from, char *to, unsigned int size) {
   }
   to[i] = '\0';
 }
+#endif
