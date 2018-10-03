@@ -15,6 +15,7 @@ class SynchConsole:dontcopythis {
 		void SynchGetString(char *s, int n);// Unix fgets(3S)
 	private:
 		Console *console;
+		const char END_STRING_CHAR = '\0';
 };
 
 #endif // SYNCHCONSOLE_H

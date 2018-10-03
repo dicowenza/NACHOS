@@ -7,6 +7,8 @@
 static Semaphore *readAvail;
 static Semaphore *writeDone;
 
+const char END_STRING_CHAR = '\0';
+
 static void ReadAvailHandler(void *arg) { (void) arg; readAvail->V(); }
 static void WriteDoneHandler(void *arg) { (void) arg; writeDone->V(); }
 
@@ -28,14 +30,19 @@ void SynchConsole::SynchPutChar(int ch) {
 }
 
 int SynchConsole::SynchGetChar() {
-	// On attend qu'il y ai quelque chose à lire
 	readAvail->P();
-	// On recupere le caractere à lire
 	int ch = (int)console->GetChar();
 	return ch;
 }
 
-void SynchConsole::SynchPutString(const char s[]) { }
+void SynchConsole::SynchPutString(const char s[]) {
+	int i = 0;
+	while (s[i] != END_STRING_CHAR) {
+		SynchPutChar((int)s[i]);
+		i++;
+	}
+}
+
 void SynchConsole::SynchGetString(char * s, int n) { }
 
 #endif // CHANGED
