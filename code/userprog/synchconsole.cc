@@ -7,8 +7,6 @@
 static Semaphore *readAvail;
 static Semaphore *writeDone;
 
-const char END_STRING_CHAR = '\0';
-
 static void ReadAvailHandler(void *arg) { (void) arg; readAvail->V(); }
 static void WriteDoneHandler(void *arg) { (void) arg; writeDone->V(); }
 
