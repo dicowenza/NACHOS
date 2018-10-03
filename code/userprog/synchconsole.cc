@@ -7,6 +7,7 @@
 static Semaphore *readAvail;
 static Semaphore *writeDone;
 
+
 static void ReadAvailHandler(void *arg) { (void) arg; readAvail->V(); }
 static void WriteDoneHandler(void *arg) { (void) arg; writeDone->V(); }
 
@@ -35,7 +36,22 @@ int SynchConsole::SynchGetChar() {
 	return ch;
 }
 
-void SynchConsole::SynchPutString(const char s[]) { }
-void SynchConsole::SynchGetString(char * s, int n) { }
+void SynchConsole::SynchPutString(const char s[]) {
+	int counter;
+	if (s==NULL)
+			return;
+	while(s[counter] != '\0' && counter)
+			{
+				SynchPutChar(s[counter]);
+				counter++;
+			}
+
+}
+
+void SynchConsole::SynchGetString(char * s, int n) {
+
+}
+
+
 
 #endif // CHANGED

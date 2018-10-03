@@ -111,3 +111,15 @@ void ExceptionHandler (ExceptionType which) {
 			ASSERT (FALSE);
 	}
 }
+
+static void copyStringFromMachine(int from, char *to, unsigned int size) {
+  int i;
+  int ch;
+
+  for(i = 0; i < size - 1 ; ++i){
+    machine->ReadMem(from + i, 1, &ch);
+    to[i] = (char) ch;
+		if (to [i] == '\0') break;
+  }
+  to[i] = '\0';
+}
