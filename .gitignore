@@ -31,3 +31,17 @@
 .nfs*
 # xgcc overided Makefile
 code/test/Makefile
+# Executables & generated files
+code/bin/coff2noff
+code/test/halt
+code/test/halt.coff
+code/test/matmult
+code/test/matmult.coff
+code/test/putchar
+code/test/putchar.coff
+code/test/shell
+code/test/shell.coff
+code/test/sort
+code/test/sort.coff
+code/threads/nachos
+code/userprog/nachos
