@@ -45,3 +45,5 @@ code/test/sort
 code/test/sort.coff
 code/threads/nachos
 code/userprog/nachos
+code/test/putstring.coff
+code/test/putstring
