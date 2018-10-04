@@ -119,6 +119,8 @@ void ConsoleTest (const char *in, const char *out) {
 
 void SynchConsoleTest (const char *in, const char *out) {
   char ch;
+  char chev_left = '<';
+  char chev_right = '>';
 
   SynchConsole *test_synchconsole = new SynchConsole(in, out);
 
@@ -131,7 +133,9 @@ void SynchConsoleTest (const char *in, const char *out) {
       break;
     }
     else {
+      test_synchconsole->SynchPutChar(chev_left);
       test_synchconsole->SynchPutChar(ch);
+      test_synchconsole->SynchPutChar(chev_right);
     }
   }
   if (ch == EOF) 
