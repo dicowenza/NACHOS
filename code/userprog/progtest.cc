@@ -123,23 +123,24 @@ void SynchConsoleTest (const char *in, const char *out) {
   SynchConsole *test_synchconsole = new SynchConsole(in, out);
 
   while ((ch = test_synchconsole->SynchGetChar()) != EOF ){
-    
     if (ch == '\n') {
       test_synchconsole->SynchPutChar(ch);
-    }
-
-    else if (ch == EOF || ch == 'q') {
+    } 
+    else if (ch == 'q') {
       fprintf(stderr, "quit signal detected in SynchConsole!\n");
       break;
-      }
-
+    }
     else {
       test_synchconsole->SynchPutChar(ch);
     }
   }
+  if (ch == EOF) 
+    printf("Nothing more, au revoir!\n");
+
   delete test_synchconsole;
   delete readAvail;
   delete writeDone;
 }
+
 
 #endif //CHANGED
