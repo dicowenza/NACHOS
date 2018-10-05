@@ -142,8 +142,6 @@ void SynchConsoleTest (const char *in, const char *out) {
     printf("Nothing more, au revoir!\n");
 
   delete test_synchconsole;
-  delete readAvail;
-  delete writeDone;
 }
 
 

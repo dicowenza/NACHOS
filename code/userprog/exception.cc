@@ -110,6 +110,13 @@ void ExceptionHandler (ExceptionType which) {
 					synchconsole->SynchPutString((const char *)s);
 					break;
 				}
+				case SC_Exit:
+				{
+					int status = machine->ReadRegister(4);
+					DEBUG('s', "Debug Exit with code %d\n", status);
+					interrupt->Halt();
+					break;
+				}
 				#endif
 				default:
 				{

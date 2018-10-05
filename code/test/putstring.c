@@ -4,7 +4,6 @@
 
 int main() {
     PutString("Bonjour\n");
-    Halt();
 }
 
 #endif
