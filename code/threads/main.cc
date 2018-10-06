@@ -138,6 +138,7 @@ main (int argc, char **argv)
 		      argCount = 3;
 		  }
 	    }
+	  #ifdef CHANGED
 	  else if (!strcmp (*argv, "-sc"))
 	  {
 	  	// test the synchconsole
@@ -149,6 +150,7 @@ main (int argc, char **argv)
 			argCount = 3;
 	    }
 	  }
+	  #endif
 #endif // USER_PROGRAM
 #ifdef FILESYS
 	  if (!strcmp (*argv, "-cp"))

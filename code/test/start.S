@@ -58,8 +58,9 @@ __start:
  * -------------------------------------------------------------
  */
 
-/* Code assembleur pour putchar */
 #ifdef CHANGED
+
+/* Code assembleur pour PutChar */
   .globl PutChar
   .ent	PutChar
 PutChar:
@@ -67,6 +68,16 @@ PutChar:
   syscall
   j	$31
   .end PutChar
+
+/* Code assembleur pour PutString */
+  .globl PutString
+  .ent	PutString
+PutString:
+  addiu $2,$0,SC_PutString
+  syscall
+  j	$31
+  .end PutString
+
 #endif
 /********************************************/
 	.globl Halt

@@ -9,7 +9,6 @@
 #
 # if you are cross-compiling, you need to point to the right executables
 # and change the flags to "ld" and the build procedure for "as".
-
 NACHOS_ROOT = ../../
 NACHOS_SYS := $(shell $(NACHOS_ROOT)/bin/nachos_sys)
 NACHOS_ARCH := $(shell $(NACHOS_ROOT)/bin/nachos_arch)

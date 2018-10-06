@@ -65,6 +65,21 @@ UpdatePC ()
 //      are in machine.h.
 //----------------------------------------------------------------------
 
+#ifdef CHANGED
+static void copyStringFromMachine(int from, char *to, unsigned int size) {
+	unsigned int i;
+	int ch;
+	for(i = 0; i < size - 1; i++){
+		machine->ReadMem(from + i, 1, &ch);
+		to[i] = (char) ch;
+		if (to [i] == '\0') break;
+	}
+	to[i] = '\0';
+}
+#endif
+
+
+
 void ExceptionHandler (ExceptionType which) {
 
 	int type = machine->ReadRegister(2);
@@ -82,9 +97,24 @@ void ExceptionHandler (ExceptionType which) {
 				#ifdef CHANGED
 				case SC_PutChar:
  				{
-					DEBUG('s', "Debug PutChar (in ExceptionHandler)\n");
+					DEBUG('s', "Debug PutChar\n");
 					int c = machine->ReadRegister(4);
 					synchconsole->SynchPutChar(c);
+					break;
+				}
+				case SC_PutString:
+				{
+					DEBUG('s', "Debug PutString\n");
+					char *s = (char *)malloc(sizeof(char) * MAX_STRING_SIZE);
+					copyStringFromMachine(machine->ReadRegister(4), s, MAX_STRING_SIZE);
+					synchconsole->SynchPutString((const char *)s);
+					break;
+				}
+				case SC_Exit:
+				{
+					int status = machine->ReadRegister(4);
+					DEBUG('s', "Debug Exit with code %d\n", status);
+					interrupt->Halt();
 					break;
 				}
 				#endif
@@ -111,16 +141,4 @@ void ExceptionHandler (ExceptionType which) {
 			ASSERT (FALSE);
 	}
 }
-#ifdef CHANGED
-static void copyStringFromMachine(int from, char *to, unsigned int size) {
-  int i;
-  int ch;
 
-  for(i = 0; i < size - 1 ; ++i){
-    machine->ReadMem(from + i, 1, &ch);
-    to[i] = (char) ch;
-		if (to [i] == '\0') break;
-  }
-  to[i] = '\0';
-}
-#endif

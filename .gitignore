@@ -1,35 +1,49 @@
+# ---> Official GitIgnore C++
 # Prerequisites
 *.d
-
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
-
 # Precompiled Headers
 *.gch
 *.pch
-
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
-
 # Fortran module files
 *.mod
 *.smod
-
 # Compiled Static libraries
 *.lai
 *.la
 *.a
 *.lib
-
 # Executables
 *.exe
 *.out
 *.app
 
-
+# ---> Custom GitIgnore Project
+# Tmp files
 .nfs*
+# xgcc overided Makefile
+code/test/Makefile
+# Executables & generated files
+code/bin/coff2noff
+code/test/halt
+code/test/halt.coff
+code/test/matmult
+code/test/matmult.coff
+code/test/putchar
+code/test/putchar.coff
+code/test/shell
+code/test/shell.coff
+code/test/sort
+code/test/sort.coff
+code/threads/nachos
+code/userprog/nachos
+code/test/putstring.coff
+code/test/putstring

@@ -116,25 +116,33 @@ void ConsoleTest (const char *in, const char *out) {
 //----------------------------------------------------------------------
 
 #ifdef CHANGED
+
 void SynchConsoleTest (const char *in, const char *out) {
   char ch;
   char chev_left = '<';
   char chev_right = '>';
 
   SynchConsole *test_synchconsole = new SynchConsole(in, out);
-  while ((ch = test_synchconsole->SynchGetChar()) != EOF)
-    test_synchconsole->SynchPutChar(ch);
 
-  if (ch == '\n') {
-    test_synchconsole->SynchPutChar(ch);
-  } 
-  else if (ch == EOF || ch == 'q') {
-    fprintf(stderr, "EOF detected in SynchConsole!\n");
-  }
-  else {
+  while ((ch = test_synchconsole->SynchGetChar()) != EOF ){
+    if (ch == '\n') {
+      test_synchconsole->SynchPutChar(ch);
+    } 
+    else if (ch == 'q') {
+      fprintf(stderr, "quit signal detected in SynchConsole!\n");
+      break;
+    }
+    else {
       test_synchconsole->SynchPutChar(chev_left);
       test_synchconsole->SynchPutChar(ch);
       test_synchconsole->SynchPutChar(chev_right);
+    }
   }
+  if (ch == EOF) 
+    printf("Nothing more, au revoir!\n");
+
+  delete test_synchconsole;
 }
+
+
 #endif //CHANGED
