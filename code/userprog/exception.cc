@@ -66,15 +66,18 @@ UpdatePC ()
 //----------------------------------------------------------------------
 
 #ifdef CHANGED
-static void copyStringFromMachine(int from, char *to, unsigned int size) {
+static int copyStringFromMachine(int from, char *to, unsigned int size) {
 	unsigned int i;
 	int ch;
+	int nb_write = 0;
 	for(i = 0; i < size - 1; i++){
 		machine->ReadMem(from + i, 1, &ch);
 		to[i] = (char) ch;
+		nb_write++;
 		if (to [i] == '\0') break;
 	}
 	to[i] = '\0';
+	return nb_write;
 }
 #endif
 
