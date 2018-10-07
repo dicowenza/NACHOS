@@ -108,6 +108,7 @@ void ExceptionHandler (ExceptionType which) {
 					char *s = (char *)malloc(sizeof(char) * MAX_STRING_SIZE);
 					copyStringFromMachine(machine->ReadRegister(4), s, MAX_STRING_SIZE);
 					synchconsole->SynchPutString((const char *)s);
+					free(s);
 					break;
 				}
 				case SC_Exit:
