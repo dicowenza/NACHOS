@@ -45,6 +45,18 @@ void SynchConsole::SynchPutString(const char s[]) {
 }
 
 void SynchConsole::SynchGetString(char * s, int n) {
+	char ch;
+	int counter= 0;
+	if(s == NULL)
+		return;
+// Tant qu'il y a des caractères et que la taille n'est pas atteinte
+	while(counter < n-1 && (ch = (char)SynchGetChar()) != EOF && ch != '\n')
+		{
+			s[counter] = ch;
+			counter++;
+		}
+		// pour marquer la fin de chaine
+		s[counter] = '\0';
 
 }
 

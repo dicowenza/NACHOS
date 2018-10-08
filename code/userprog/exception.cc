@@ -66,7 +66,8 @@ UpdatePC ()
 //----------------------------------------------------------------------
 
 #ifdef CHANGED
-static int copyStringFromMachine(int from, char *to, unsigned int size) {
+
+int copyStringFromMachine(int from, char *to, unsigned int size) {
 	unsigned int i;
 	int ch;
 	int nb_write = 0;
@@ -79,8 +80,15 @@ static int copyStringFromMachine(int from, char *to, unsigned int size) {
 	to[i] = '\0';
 	return nb_write;
 }
-#endif
 
+void copyStringToMachine(char *from, int to, unsigned int size){
+unsigned int i;
+for(i = 0; i < size - 1 && from[i] != '\0'; ++i)
+    machine->WriteMem(to + i, 1, (unsigned int)from[i]);
+machine->WriteMem(to + i, 1, 0);
+}
+
+#endif // CHANGED
 
 
 void ExceptionHandler (ExceptionType which) {
@@ -145,4 +153,3 @@ void ExceptionHandler (ExceptionType which) {
 			ASSERT (FALSE);
 	}
 }
-
