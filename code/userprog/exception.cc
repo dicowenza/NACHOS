@@ -115,6 +115,14 @@ void ExceptionHandler (ExceptionType which) {
 					synchconsole->SynchPutChar(c);
 					break;
 				}
+				case SC_GetChar:
+				{
+					DEBUG('s', "Debug GetChar\n");
+					int c = synchconsole->SynchGetChar();
+					// Put the char in r2 (The register used for the return of a function)
+					machine->WriteRegister(2, c);
+					break;
+				}
 				case SC_PutString:
 				{
 					DEBUG('s', "Debug PutString\n");
@@ -122,6 +130,12 @@ void ExceptionHandler (ExceptionType which) {
 					copyStringFromMachine(machine->ReadRegister(4), s, MAX_STRING_SIZE);
 					synchconsole->SynchPutString((const char *)s);
 					free(s);
+					break;
+				}
+				case SC_GetString:
+				{
+					DEBUG('s', "Debug GetString\n");
+					// TODO
 					break;
 				}
 				case SC_Exit:

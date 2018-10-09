@@ -1,23 +1,29 @@
 #ifdef CHANGED
 
 #include "syscall.h"
-void print(char c, int n)
-{
-  int i;
-  #if 1
 
-  for (i = 0; i < n; i++) {
-    PutChar(c + i);
-  }
-  PutChar('\n');
-
-  #endif
+void print(char c, int n) {
+	int i;
+	for (i = 0; i < n; i++)
+		PutChar(c + i);
+	PutChar('\n');
+	PutString("Bonjour\n");
 }
 
-int main()
-{
-  print('a',4);
-  // Exit(1);
+void get() {
+	int c;
+	PutString("Saisir un char : ");
+	c = GetChar();
+	PutChar('\n');
+	PutString("Le char saisit est : ");
+	PutChar((char)c);
+	PutChar('\n');
+}
+
+int main() {
+	print('a', 4);
+	get();
+	Exit(1);
 }
 
 #endif

@@ -69,6 +69,15 @@ PutChar:
   j	$31
   .end PutChar
 
+/* Code assembleur pour GetChar */
+  .globl GetChar
+  .ent	GetChar
+GetChar:
+  addiu $2,$0,SC_GetChar
+  syscall
+  j	$31
+  .end GetChar
+
 /* Code assembleur pour PutString */
   .globl PutString
   .ent	PutString
@@ -77,6 +86,15 @@ PutString:
   syscall
   j	$31
   .end PutString
+
+/* Code assembleur pour GetString */
+  .globl GetString
+  .ent	GetString
+GetString:
+  addiu $2,$0,SC_GetString
+  syscall
+  j	$31
+  .end GetString
 
 #endif
 /********************************************/
