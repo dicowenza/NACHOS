@@ -138,7 +138,7 @@ void Yield ();
 
 #ifdef CHANGED
 void PutChar(char c);
-int GerChar();
+int GetChar();
 void PutString(const char s[]);
 void GetString(char *s, int n);
 #endif
