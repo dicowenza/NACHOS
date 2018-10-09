@@ -67,11 +67,11 @@ UpdatePC ()
 
 #ifdef CHANGED
 
-int copyStringFromMachine(int from, char *to, unsigned int size) {
+static int copyStringFromMachine(int from, char *to, unsigned int size) {
 	unsigned int i;
 	int ch;
 	int nb_write = 0;
-	for(i = 0; i < size - 1; i++){
+	for(i = 0; i < size - 1; i++) {
 		machine->ReadMem(from + i, 1, &ch);
 		to[i] = (char) ch;
 		nb_write++;
@@ -81,11 +81,13 @@ int copyStringFromMachine(int from, char *to, unsigned int size) {
 	return nb_write;
 }
 
-void copyStringToMachine(char *from, int to, unsigned int size){
-unsigned int i;
-for(i = 0; i < size - 1 && from[i] != '\0'; ++i)
-    machine->WriteMem(to + i, 1, (unsigned int)from[i]);
-machine->WriteMem(to + i, 1, 0);
+static void copyStringToMachine(char *from, int to, unsigned int size) {
+	unsigned int i;
+	for(i = 0; i < size - 1; i++) {
+		machine->WriteMem(to + i, 1, (unsigned int)from[i]);
+		if (from[i] != '\0') break;
+	}
+	machine->WriteMem(to + i, 1, 0);
 }
 
 #endif // CHANGED

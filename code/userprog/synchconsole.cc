@@ -29,35 +29,29 @@ void SynchConsole::SynchPutChar(int ch) {
 }
 
 int SynchConsole::SynchGetChar() {
-	// On attend qu'il y ai quelque chose à lire
 	readAvail->P();
-	// On recupere le caractere à lire
 	int ch = (int)console->GetChar();
 	return ch;
 }
 
 void SynchConsole::SynchPutString(const char s[]) {
-        int i = 0;
-        while (s[i] != END_STRING_CHAR) {
-                SynchPutChar((int)s[i]);
-                i++;
-        }
+	int i = 0;
+	while (s[i] != END_STRING_CHAR) {
+		SynchPutChar((int)s[i]);
+		i++;
+	}
 }
 
 void SynchConsole::SynchGetString(char * s, int n) {
+	if (s == NULL) return;
 	char ch;
-	int counter= 0;
-	if(s == NULL)
-		return;
-// Tant qu'il y a des caractères et que la taille n'est pas atteinte
-	while(counter < n-1 && (ch = (char)SynchGetChar()) != EOF && ch != '\n')
-		{
-			s[counter] = ch;
-			counter++;
-		}
-		// pour marquer la fin de chaine
-		s[counter] = '\0';
-
+	int i;
+	for (i = 0; i < n-1; i++) {
+		ch = (char)SynchGetChar();
+		if (ch == EOF) break;
+		s[i] = ch;
+	}
+	s[i] = END_STRING_CHAR;
 }
 
 
