@@ -143,7 +143,9 @@ void ExceptionHandler (ExceptionType which) {
 				}
 				case SC_Exit:
 				{
-					int status = machine->ReadRegister(4);
+					int main_ret = machine->ReadRegister(4);
+					DEBUG('s', "Debug main return with int %d\n", main_ret);
+					int status = machine->ReadRegister(2);
 					DEBUG('s', "Debug Exit with code %d\n", status);
 					interrupt->Halt();
 					break;

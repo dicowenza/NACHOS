@@ -32,7 +32,8 @@ void get() {
 int main() {
 	print('a', 4);
 	get();
-	Exit(1);
+	// Exit(1);
+	return 0;
 }
 
 #endif
