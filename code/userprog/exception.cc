@@ -70,24 +70,22 @@ UpdatePC ()
 static int copyStringFromMachine(int from, char *to, unsigned int size) {
 	unsigned int i;
 	int ch;
-	int nb_write = 0;
 	for(i = 0; i < size - 1; i++) {
 		machine->ReadMem(from + i, 1, &ch);
-		to[i] = (char) ch;
-		nb_write++;
-		if (to [i] == '\0') break;
+		if ((char)ch == '\0') break;
+		to[i] = (char)ch;
 	}
 	to[i] = '\0';
-	return nb_write;
+	return i;
 }
 
 static void copyStringToMachine(char *from, int to, unsigned int size) {
 	unsigned int i;
 	for(i = 0; i < size - 1; i++) {
-		machine->WriteMem(to + i, 1, (unsigned int)from[i]);
-		if (from[i] != '\0') break;
+		machine->WriteMem(to + i, 1, (int)from[i]);
+		if (from[i] == '\0') break;
 	}
-	machine->WriteMem(to + i, 1, 0);
+	machine->WriteMem(to + i, 1, (int)'\0');
 }
 
 #endif // CHANGED
@@ -126,16 +124,21 @@ void ExceptionHandler (ExceptionType which) {
 				case SC_PutString:
 				{
 					DEBUG('s', "Debug PutString\n");
-					char *s = (char *)malloc(sizeof(char) * MAX_STRING_SIZE);
-					copyStringFromMachine(machine->ReadRegister(4), s, MAX_STRING_SIZE);
-					synchconsole->SynchPutString((const char *)s);
-					free(s);
+					char *buffer = new char[MAX_STRING_SIZE];
+					copyStringFromMachine(machine->ReadRegister(4), buffer, MAX_STRING_SIZE);
+					synchconsole->SynchPutString((const char *)buffer);
+					delete buffer;
 					break;
 				}
 				case SC_GetString:
 				{
 					DEBUG('s', "Debug GetString\n");
-					// TODO
+					char *buffer = new char[MAX_STRING_SIZE];
+					int s = machine->ReadRegister(4);
+            		unsigned int n = machine->ReadRegister(5);
+					synchconsole->SynchGetString(buffer, n);
+					copyStringToMachine(buffer, s, n);
+					delete buffer;
 					break;
 				}
 				case SC_Exit:

@@ -7,7 +7,6 @@
 static Semaphore *readAvail;
 static Semaphore *writeDone;
 
-
 static void ReadAvailHandler(void *arg) { (void) arg; readAvail->V(); }
 static void WriteDoneHandler(void *arg) { (void) arg; writeDone->V(); }
 
@@ -48,8 +47,8 @@ void SynchConsole::SynchGetString(char * s, int n) {
 	int i;
 	for (i = 0; i < n-1; i++) {
 		ch = (char)SynchGetChar();
-		if (ch == EOF) break;
 		s[i] = ch;
+		if (ch == EOF || ch == '\n') break;
 	}
 	s[i] = END_STRING_CHAR;
 }
