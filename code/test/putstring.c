@@ -3,16 +3,15 @@
 #include "syscall.h"
 
 int main() {
-    int c;
     char str[100];
-
-    PutString("Veuillez entrer un caractère: \n");
-    c = GetChar();
-    PutString("Le caractere saisie est :");
-    PutChar(c);
+    PutString("1. Get : ");
+    GetString(str, 13);
+    PutString("\n2. Put : ");
+    PutString(str);
     PutString("\n");
-    PutString("Veuillez entrer une str: \n");
-    GetString(str, 10);
+    
+    // Test putstring alphabet
+    PutString("abcdefghijklmnopqrstuvwxyz\n");
     return 0;
 }
 

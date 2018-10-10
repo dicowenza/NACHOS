@@ -32,7 +32,7 @@ extern Timer *timer;		// the hardware alarm clock
 
 #ifdef USER_PROGRAM
 #ifdef CHANGED
-const unsigned int MAX_STRING_SIZE = 1024;
+const unsigned int MAX_STRING_SIZE = 10;
 #include "synchconsole.h"
 extern SynchConsole *synchconsole;
 #endif

@@ -67,6 +67,9 @@ UpdatePC ()
 
 #ifdef CHANGED
 
+/** 
+ * @return int Nb writed char.
+ */
 static int copyStringFromMachine(int from, char *to, unsigned int size) {
 	unsigned int i;
 	int ch;
@@ -125,8 +128,19 @@ void ExceptionHandler (ExceptionType which) {
 				{
 					DEBUG('s', "Debug PutString\n");
 					char *buffer = new char[MAX_STRING_SIZE];
-					copyStringFromMachine(machine->ReadRegister(4), buffer, MAX_STRING_SIZE);
-					synchconsole->SynchPutString((const char *)buffer);
+
+					int str = machine->ReadRegister(4);
+					int shift = 0;
+					int loop = 0;
+					int nb_write;
+
+					do {
+						nb_write = copyStringFromMachine(str+shift, buffer, MAX_STRING_SIZE);
+						synchconsole->SynchPutString((const char *)buffer);
+						loop++;
+						shift = loop * sizeof(char) * (MAX_STRING_SIZE-1);
+					} while (nb_write == (MAX_STRING_SIZE-1));
+
 					delete buffer;
 					break;
 				}
