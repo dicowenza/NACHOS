@@ -157,14 +157,12 @@ void ExceptionHandler (ExceptionType which) {
 					int shift = 0;
 					unsigned int remain_char = n;
 					int nb_read;
-					int count = 0;
 
 					for (unsigned int i = 0; i < (n / MAX_STRING_SIZE) + 1; i++) {
 						remain_char -= (MAX_STRING_SIZE-1);
 						synchconsole->SynchGetString(buffer, MAX_STRING_SIZE);
 						nb_read = copyStringToMachine(buffer, s + shift, MAX_STRING_SIZE);
-						count++;
-						shift = count * sizeof(char) * (MAX_STRING_SIZE-1);
+						shift = (i+1) * sizeof(char) * (MAX_STRING_SIZE-1);
 						if (remain_char <= 0 || (nb_read != MAX_STRING_SIZE-1)) break;
 					}
 
