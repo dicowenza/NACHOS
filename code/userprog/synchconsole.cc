@@ -47,8 +47,8 @@ void SynchConsole::SynchGetString(char * s, int n) {
 	int i;
 	for (i = 0; i < n-1; i++) {
 		ch = (char)SynchGetChar();
-		s[i] = ch;
 		if (ch == EOF || ch == '\n') break;
+		s[i] = ch;
 	}
 	s[i] = END_STRING_CHAR;
 }

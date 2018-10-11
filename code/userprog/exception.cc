@@ -68,7 +68,7 @@ UpdatePC ()
 #ifdef CHANGED
 
 /** 
- * @return int Nb writed char.
+ * @return int Nb wrote char.
  */
 static int copyStringFromMachine(int from, char *to, unsigned int size) {
 	unsigned int i;
@@ -82,13 +82,17 @@ static int copyStringFromMachine(int from, char *to, unsigned int size) {
 	return i;
 }
 
-static void copyStringToMachine(char *from, int to, unsigned int size) {
+/**
+ * @return int Nb read char.
+ */
+static int copyStringToMachine(char *from, int to, unsigned int size) {
 	unsigned int i;
 	for(i = 0; i < size - 1; i++) {
 		machine->WriteMem(to + i, 1, (int)from[i]);
 		if (from[i] == '\0') break;
 	}
 	machine->WriteMem(to + i, 1, (int)'\0');
+	return i;
 }
 
 #endif // CHANGED
@@ -133,9 +137,8 @@ void ExceptionHandler (ExceptionType which) {
 					int shift = 0;
 					int loop = 0;
 					int nb_write;
-
 					do {
-						nb_write = copyStringFromMachine(str+shift, buffer, MAX_STRING_SIZE);
+						nb_write = copyStringFromMachine(str + shift, buffer, MAX_STRING_SIZE);
 						synchconsole->SynchPutString((const char *)buffer);
 						loop++;
 						shift = loop * sizeof(char) * (MAX_STRING_SIZE-1);
@@ -149,9 +152,22 @@ void ExceptionHandler (ExceptionType which) {
 					DEBUG('s', "Debug GetString\n");
 					char *buffer = new char[MAX_STRING_SIZE];
 					int s = machine->ReadRegister(4);
-            		unsigned int n = machine->ReadRegister(5);
-					synchconsole->SynchGetString(buffer, n);
-					copyStringToMachine(buffer, s, n);
+					unsigned int n = machine->ReadRegister(5);
+
+					int shift = 0;
+					unsigned int remain_char = n;
+					int nb_read;
+					int count = 0;
+
+					for (unsigned int i = 0; i < (n / MAX_STRING_SIZE) + 1; i++) {
+						remain_char -= (MAX_STRING_SIZE-1);
+						synchconsole->SynchGetString(buffer, MAX_STRING_SIZE);
+						nb_read = copyStringToMachine(buffer, s + shift, MAX_STRING_SIZE);
+						count++;
+						shift = count * sizeof(char) * (MAX_STRING_SIZE-1);
+						if (remain_char <= 0 || (nb_read != MAX_STRING_SIZE-1)) break;
+					}
+
 					delete buffer;
 					break;
 				}
