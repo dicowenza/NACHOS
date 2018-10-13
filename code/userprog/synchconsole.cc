@@ -41,7 +41,7 @@ void SynchConsole::SynchPutString(const char s[]) {
 	}
 }
 
-void SynchConsole::SynchGetString(char * s, int n) {
+void SynchConsole::SynchGetString(char *s, int n) {
 	if (s == NULL) return;
 	char ch;
 	int i;
@@ -51,6 +51,22 @@ void SynchConsole::SynchGetString(char * s, int n) {
 		s[i] = ch;
 	}
 	s[i] = END_STRING_CHAR;
+}
+
+void SynchConsole::SynchPutInt(int n) {
+	char *buffer = new char[INT_MAX_DIGIT];
+	snprintf(buffer, INT_MAX_DIGIT, "%d", n);
+	SynchPutString(buffer);
+	delete[] buffer;
+}
+
+int SynchConsole::SynchGetInt() {
+	int n;
+	char *buffer = new char[INT_MAX_DIGIT];
+	SynchGetString(buffer, INT_MAX_DIGIT);
+	sscanf(buffer, "%d", &n);
+	delete[] buffer;
+	return n;
 }
 
 

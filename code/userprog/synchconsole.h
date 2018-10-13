@@ -13,9 +13,13 @@ class SynchConsole:dontcopythis {
 		int SynchGetChar();                 // Unix getchar(3S)
 		void SynchPutString(const char *s);	// Unix fputs(3S)
 		void SynchGetString(char *s, int n);// Unix fgets(3S)
+		void SynchPutInt(int n);
+		int SynchGetInt();
 	private:
 		Console *console;
 		const char END_STRING_CHAR = '\0';
+		const int INT_MAX_DIGIT = 12; 	// We assume that sizeof(int) == 4
+		// 10 digit + 1 for sign + 1 for '\0'
 };
 
 #endif // SYNCHCONSOLE_H

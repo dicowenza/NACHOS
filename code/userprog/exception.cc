@@ -178,6 +178,20 @@ void ExceptionHandler (ExceptionType which) {
 					interrupt->Halt();
 					break;
 				}
+				case SC_PutInt:
+				{
+					DEBUG('s', "Debug PutInt");
+					int n = machine->ReadRegister(4);
+					synchconsole->SynchPutInt(n);
+					break;
+				}
+				case SC_GetInt:
+				{
+					DEBUG('s', "Debug GetInt");
+					int n = synchconsole->SynchGetInt();
+					machine->WriteRegister(2, n);
+					break;
+				}
 				#endif
 				default:
 				{
