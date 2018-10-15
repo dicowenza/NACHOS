@@ -31,13 +31,15 @@ extern Statistics *stats;	// performance metrics
 extern Timer *timer;		// the hardware alarm clock
 
 #ifdef USER_PROGRAM
+#include "machine.h"
+extern Machine *machine;	// user program memory and registers
 #ifdef CHANGED
 const unsigned int MAX_STRING_SIZE = 10;
 #include "synchconsole.h"
 extern SynchConsole *synchconsole;
+int copyStringFromMachine(int from, char *to, unsigned int size);
+int copyStringToMachine(char *from, int to, unsigned int size);
 #endif
-#include "machine.h"
-extern Machine *machine;	// user program memory and registers
 #endif
 
 #ifdef FILESYS_NEEDED		// FILESYS or FILESYS_STUB

@@ -34,11 +34,37 @@ SynchDisk *synchDisk;
 #ifdef USER_PROGRAM		// requires either FILESYS or FILESYS_STUB
 Machine *machine;		// user program memory and registers
 #ifdef CHANGED
+
+/** 
+ * @return int Nb wrote char.
+ */
+int copyStringFromMachine(int from, char *to, unsigned int size) {
+	unsigned int i;
+	int ch;
+	for(i = 0; i < size - 1; i++) {
+		machine->ReadMem(from + i, 1, &ch);
+		if ((char)ch == '\0') break;
+		to[i] = (char)ch;
+	}
+	to[i] = '\0';
+	return i;
+}
+/**
+ * @return int Nb read char.
+ */
+int copyStringToMachine(char *from, int to, unsigned int size) {
+	unsigned int i;
+	for(i = 0; i < size - 1; i++) {
+		machine->WriteMem(to + i, 1, (int)from[i]);
+		if (from[i] == '\0') break;
+	}
+	machine->WriteMem(to + i, 1, (int)'\0');
+	return i;
+}
+
 SynchConsole *synchconsole;
 #endif
 #endif
-
-
 
 #ifdef NETWORK
 PostOffice *postOffice;
