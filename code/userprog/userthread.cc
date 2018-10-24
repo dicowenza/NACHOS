@@ -8,39 +8,37 @@
 #include "synch.h"
 
 
-typedef struct schmurtz{
-	int f;
-	void arg;
-}schmurtz;
+
 
 static void StartUserThread (void *schmurtz);
 static int cptThread = 0;
 
-int do_ThreadCreate (int f, int arg){
+int do_ThreadCreate (int f,void * arg){
 	cptThread++;
 	DEBUG ('x', "[DEBUG] cptThread: %d\n", cptThread);
-	schmurtz = (schmurtz *) malloc (sizeof schmurtz);
-	s.f = f;
-	s.arg = arg;
+	schmurtz *s= (schmurtz *)malloc (sizeof (schmurtz));
+	s->f = f;
+	s->arg = arg;
 	Thread *newThread = new Thread ("nouveauThread");
-	newThread->Start (StartUserThread, schmurtz);
+	newThread->Start (StartUserThread, s);
 	return 0;
 }
 
-static void StartUserThread (void *schmurtz){
-  int i;
-  for (i = 0; i < NumTotalRegs; i++)
-	   machine->WriteRegister (i, 0);
+static void StartUserThread (void * structure){
 
-  schmurtz s= (schmurtz)
+  for (int i = 0; i < NumTotalRegs; i++){
+		 machine->WriteRegister (i, 0);
+	}
+
+  schmurtz* s= (schmurtz*) structure;
 
   int stacktopAdress = currentThread->space->AllocateUserStack(cptThread);
 
-	machine->WriteRegister (PCReg, f);
-	DEBUG ('x', "[DEBUG] Function: %d\n", f);
+	machine->WriteRegister (PCReg, s->f);
+	DEBUG ('x', "[DEBUG] Function: %d\n", s->f);
 
-	machine->WriteRegister (4, arg);
-	DEBUG ('x', "[DEBUG] Arg: %d\n", arg);
+	// machine->WriteRegister (4, 0);
+	// DEBUG ('x', "[DEBUG] Arg: %d\n", s->arg);
 
 	machine->WriteRegister (NextPCReg, machine->ReadRegister(PCReg) + 4);
 	DEBUG ('x', "[DEBUG] NextPCReg: %d\n", machine->ReadRegister(PCReg) + 4);
@@ -49,7 +47,7 @@ static void StartUserThread (void *schmurtz){
 	DEBUG ('x', "[DEBUG] Adress: %d\n", stacktopAdress);
 
 	machine->Run ();
-	free (schmurtz);
+	free (structure);
 }
 
 

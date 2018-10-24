@@ -3,9 +3,15 @@
 #ifndef USERTHREAD_H
 #define USERTHREAD_H
 
-extern int do_ThreadCreate (int f, int arg);
+typedef struct schmurtz{
+	int f;
+	void * arg;
+}schmurtz;
+
+
+extern int do_ThreadCreate (int f, void* arg);
 extern void do_ThreadExit ();
 
 #endif
 
-#endif ∕∕ CHANGED
+#endif

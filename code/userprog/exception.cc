@@ -25,6 +25,7 @@
 #include "system.h"
 #include "syscall.h"
 #include "synchconsole.h"
+#include "userthread.h"
 
 //----------------------------------------------------------------------
 // UpdatePC : Increments the Program Counter register in order to resume
