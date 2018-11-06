@@ -1,3 +1,4 @@
+
 // exception.cc
 //      Entry point into the Nachos kernel from user programs.
 //      There are two kinds of things that can cause control to
@@ -163,11 +164,17 @@ void ExceptionHandler (ExceptionType which) {
 
 				case SC_ThreadCreate:
 				{
-
+          DEBUG ('s', "threadCreate\n");
+			    int f = machine->ReadRegister (4);
+			    int arg = machine->ReadRegister (5);
+			    do_ThreadCreate (f, arg);
+          break;
 				}
 				case SC_ThreadExit:
 				{
-
+          DEBUG ('s', "threadExit\n");
+          			do_ThreadExit ();
+          break;
 				}
 				#endif
 				default:
