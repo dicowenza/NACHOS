@@ -160,6 +160,15 @@ void ExceptionHandler (ExceptionType which) {
 					machine->WriteRegister(2, n);
 					break;
 				}
+
+				case SC_ThreadCreate:
+				{
+
+				}
+				case SC_ThreadExit:
+				{
+
+				}
 				#endif
 				default:
 				{
