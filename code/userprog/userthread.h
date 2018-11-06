@@ -1,17 +1,14 @@
 #ifdef CHANGED
-
 #ifndef USERTHREAD_H
 #define USERTHREAD_H
 
-typedef struct schmurtz{
+typedef struct ThreadArgs {
 	int f;
-	void * arg;
-}schmurtz;
+	void *arg;
+} ThreadArgs;
 
-
-extern int do_ThreadCreate (int f, void* arg);
-extern void do_ThreadExit ();
+extern void do_ThreadCreate(int f, void* arg);
+extern void do_ThreadExit();
 
 #endif
-
 #endif

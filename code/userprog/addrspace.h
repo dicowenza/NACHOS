@@ -23,7 +23,7 @@ class AddrSpace:dontcopythis
 {
   public:
     #ifdef CHANGED
-        int AllocateUserStack(int cptThread);
+      int AllocateUserStack(int cptThread);
     #endif
     AddrSpace (OpenFile * executable);	// Create an address space,
     // initializing it with the program

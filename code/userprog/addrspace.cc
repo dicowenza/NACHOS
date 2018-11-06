@@ -199,7 +199,7 @@ AddrSpace::RestoreState ()
 }
 
 #ifdef CHANGED
-int AddrSpace::AllocateUserStack (int cptThread){
-  return 1;
+int AddrSpace::AllocateUserStack(int cptThread) {
+    return 1;
 }
 #endif
