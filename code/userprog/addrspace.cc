@@ -199,7 +199,16 @@ AddrSpace::RestoreState ()
 }
 
 #ifdef CHANGED
+//-----------------------------------------------------------------------
+//Initialize stack Pointer,
+//@return int address of new stak top address
+//tmp method: 256 under virtual memory ending
+//sizeof virtual memeory = numPages*PageSize
+//-----------------------------------------------------------------------
 int AddrSpace::AllocateUserStack(int cptThread) {
-    return 1;
+    // allocated the stack; but subtract off a bit, to make sure we don't
+    // accidentally reference off the end!
+    DEBUG ('h', "numPages %d - PageSize %d\n", numPages, PageSize);
+    return (numPages*PageSize-cptThread*256)-16;
 }
 #endif
