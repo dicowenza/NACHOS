@@ -4,10 +4,10 @@
 
 typedef struct ThreadArgs {
 	int f;
-	void *arg;
+	int arg;
 } ThreadArgs;
 
-extern void do_ThreadCreate(int f, void* arg);
+extern void do_ThreadCreate(int f, int arg);
 extern void do_ThreadExit();
 
 #endif

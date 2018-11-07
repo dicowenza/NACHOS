@@ -9,18 +9,18 @@ void f(void *arg) {
     int i, y;
     y = (int)arg;
     PutString("We are in the thread t\n");
-    i = (int)arg;
-    for (i = 0; i < y+10; i++) {
+    for (i = y; i < y+10; i++) {
         PutInt(i);
         PutString("\n");
     }
 }
 
 int main() {
-    int x = 5;
+    int t, x = 5;
     void *arg = &x;
-	int t = ThreadCreate(f, arg);
-    ThreadExit(t);
+    PutString("Launch t thread from main\n");
+	t = ThreadCreate(&f, arg);
+    //ThreadExit();
 	return 0;
 }
 

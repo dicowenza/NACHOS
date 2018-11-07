@@ -167,8 +167,7 @@ void ExceptionHandler (ExceptionType which) {
 					DEBUG('s', "threadCreate\n");
 					int f = machine->ReadRegister(PCReg);
 					int arg = machine->ReadRegister(4);
-					void *x = &arg;
-					do_ThreadCreate(f, x);
+					do_ThreadCreate(f, arg);
           			break;
 				}
 				case SC_ThreadExit:
