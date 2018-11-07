@@ -114,6 +114,24 @@ GetInt:
   j	$31
   .end GetInt
 
+/* Code assembleur pour ThreadCreate */
+  .globl ThreadCreate
+  .ent	ThreadCreate
+ThreadCreate:
+  addiu $2,$0,SC_ThreadCreate
+  syscall
+  j	$31
+  .end ThreadCreate
+
+/* Code assembleur pour ThreadExit */
+  .globl ThreadExit
+  .ent	ThreadExit
+ThreadExit:
+  addiu $2,$0,SC_ThreadExit
+  syscall
+  j	$31
+  .end ThreadExit
+
 #endif
 /********************************************/
 	.globl Halt

@@ -14,7 +14,7 @@ static int cptThread = 0;
 /**
  * This function is called when the SC ThreadCreate is called.
  */
-void do_ThreadCreate(int f,void * arg) {
+void do_ThreadCreate(int f, void *arg) {
 	cptThread++;
 	DEBUG ('x', "[DEBUG] cptThread: %d\n", cptThread);
 	
@@ -29,7 +29,7 @@ void do_ThreadCreate(int f,void * arg) {
 
 
 /**
- * This function is called at the start of the thread.
+ * This function is called at the start of a user thread.
  * Initialize MIPS registers and launch the interpreter.
  */
 static void StartUserThread(void *argsStruct) {
@@ -41,8 +41,9 @@ static void StartUserThread(void *argsStruct) {
 		machine->WriteRegister(i, 0);
 	}
 
-	machine->WriteRegister(4, TArgs->arg); // Argument register
-	DEBUG('x', "[DEBUG] Reg4: %d\n", TArgs->f);
+	int arg = *((int *)TArgs->arg);
+	machine->WriteRegister(4, arg); // Argument register
+	DEBUG('x', "[DEBUG] Reg4: %d\n", arg);
 	machine->WriteRegister(PCReg, TArgs->f);
 	DEBUG('x', "[DEBUG] PCReg: %d\n", TArgs->f);
 	machine->WriteRegister(NextPCReg, machine->ReadRegister(PCReg) + 4);
@@ -50,6 +51,7 @@ static void StartUserThread(void *argsStruct) {
 	machine->WriteRegister(StackReg, stacktopAdress);
 	DEBUG('x', "[DEBUG] StackReg: %d\n", stacktopAdress);
 
+	free(TArgs);
 	machine->Run();
 }
 

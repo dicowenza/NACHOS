@@ -164,17 +164,18 @@ void ExceptionHandler (ExceptionType which) {
 
 				case SC_ThreadCreate:
 				{
-          DEBUG ('s', "threadCreate\n");
-			    int f = machine->ReadRegister (4);
-			    int arg = machine->ReadRegister (5);
-			    do_ThreadCreate (f, arg);
-          break;
+					DEBUG('s', "threadCreate\n");
+					int f = machine->ReadRegister(PCReg);
+					int arg = machine->ReadRegister(4);
+					void *x = &arg;
+					do_ThreadCreate(f, x);
+          			break;
 				}
 				case SC_ThreadExit:
 				{
-          DEBUG ('s', "threadExit\n");
-          			do_ThreadExit ();
-          break;
+          			DEBUG ('s', "threadExit\n");
+          			do_ThreadExit();
+          			break;
 				}
 				#endif
 				default:

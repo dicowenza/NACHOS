@@ -49,3 +49,5 @@ code/test/putstring.coff
 code/test/putstring
 code/test/putint
 code/test/putint.coff
+code/test/makethreads.coff
+code/test/makethreads

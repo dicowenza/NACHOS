@@ -149,8 +149,8 @@ void GetString(char *s, int n);
 void PutInt(int n);
 int GetInt();
 
-int ThreadCreate(void f(void *arg), void *arg);
-void ThreadExit(void);
+int ThreadCreate(void (*f)(void*), void *arg);
+void ThreadExit();
 #endif
 
 #endif // IN_USER_MODE
