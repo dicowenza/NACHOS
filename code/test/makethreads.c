@@ -3,25 +3,23 @@
 #include "syscall.h"
 
 /**
- * Print the 10 next number of (int)arg.
+ * Print the given arg.
  */
 void f(void *arg) {
-    int i, y;
-    y = (int)arg;
+    int x = *((int *)arg);
     PutString("We are in the thread t\n");
-    for (i = y; i < y+10; i++) {
-        PutInt(i);
-        PutString("\n");
-    }
+    PutString("The given arg of thread t function is : ");
+    PutInt(x);
+    PutString("\n");
+    ThreadExit();
 }
 
 int main() {
-    int t, x = 5;
+    int x = 5;
     void *arg = &x;
-    PutString("Launch t thread from main\n");
-	t = ThreadCreate(&f, arg);
-    //ThreadExit();
-	return 0;
+    PutString("Launch thread t from main\n");
+	ThreadCreate(f, arg);
+    while(1);
 }
 
 #endif

@@ -165,8 +165,8 @@ void ExceptionHandler (ExceptionType which) {
 				case SC_ThreadCreate:
 				{
 					DEBUG('s', "threadCreate\n");
-					int f = machine->ReadRegister(PCReg);
-					int arg = machine->ReadRegister(4);
+					int f = machine->ReadRegister(4);
+					int arg = machine->ReadRegister(5);
 					do_ThreadCreate(f, arg);
           			break;
 				}
