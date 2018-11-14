@@ -3,7 +3,7 @@
 #include "syscall.h"
 
 /**
- * Print the given arg.
+ * Print the given int arg.
  */
 void f(void *arg) {
     int x = *((int *)arg);
@@ -19,7 +19,8 @@ int main() {
     void *arg = &x;
     PutString("Launch thread t from main\n");
 	ThreadCreate(f, arg);
-    while(1);
+    PutString("We'll exit from main\n");
+    ThreadExit();
 }
 
 #endif
