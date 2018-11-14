@@ -17,6 +17,10 @@
 #include "filesys.h"
 #include "translate.h"
 
+#ifdef CHANGED
+class Semaphore;
+#endif
+
 #define UserStacksAreaSize		1024	// increase this as necessary!
 
 class AddrSpace:dontcopythis
@@ -24,6 +28,7 @@ class AddrSpace:dontcopythis
   public:
     #ifdef CHANGED
       int AllocateUserStack(int cptThread);
+      Semaphore *mutex_cpt_thread;
     #endif
     AddrSpace (OpenFile * executable);	// Create an address space,
     // initializing it with the program

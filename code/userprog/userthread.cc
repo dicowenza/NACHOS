@@ -9,13 +9,13 @@
 static void StartUserThread(void *argsStruct);
 static int cptThread = 0;
 
-
-
 /**
  * This function is called when the SC ThreadCreate is called.
  */
 void do_ThreadCreate(int f, int arg) {
+	currentThread->space->mutex_cpt_thread->P();
 	cptThread++;
+	currentThread->space->mutex_cpt_thread->V();
 	DEBUG ('x', "[DEBUG] cptThread: %d\n", cptThread);
 	
 	ThreadArgs *TArgs = (ThreadArgs *) malloc(sizeof(ThreadArgs));
@@ -56,9 +56,10 @@ static void StartUserThread(void *argsStruct) {
 
 void do_ThreadExit() {
 	DEBUG ('x', "[DEBUG] cptThread Exit: %d\n", cptThread);
-	if (cptThread > 0) {
-		cptThread--;
-	} else {
+	currentThread->space->mutex_cpt_thread->P();
+	cptThread--;
+	currentThread->space->mutex_cpt_thread->V();
+	if (cptThread == 0) {
 		interrupt->Halt();
 	}
 	currentThread->Finish();

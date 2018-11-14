@@ -20,6 +20,9 @@
 #include "addrspace.h"
 #include "noff.h"
 #include "syscall.h"
+#ifdef CHANGED
+#include "synch.h"
+#endif
 #include "new"
 
 //----------------------------------------------------------------------
@@ -62,6 +65,10 @@ SwapHeader (NoffHeader * noffH)
 
 AddrSpace::AddrSpace (OpenFile * executable)
 {
+
+    #ifdef CHANGED
+    mutex_cpt_thread = new Semaphore("mutex_cpt_thread", 1);
+    #endif
     NoffHeader noffH;
     unsigned int i, size;
 
