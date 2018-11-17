@@ -49,7 +49,7 @@ code/test/putstring.coff
 code/test/putstring
 code/test/putint
 code/test/putint.coff
-code/test/makethreads.coff
-code/test/makethreads
 code/test/multithreads.coff
 code/test/multithreads
+code/test/makethread.coff
+code/test/makethread

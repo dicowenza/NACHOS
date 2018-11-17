@@ -1,14 +1,16 @@
 #ifdef CHANGED
 
 #include "syscall.h"
+#define N 10 // Nb of created threads.
 
-#define N 10
+int test_inc = 0;
 
 /**
- * Print the number of the thread (== the given arg).
+ * Print the number of the thread (i.e. the given arg).
  */
 void f(void *arg) {
     int x = *((int *)arg);
+    test_inc++;
     PutString("Thread N°");
     PutInt(x);
     PutString("\n");
@@ -16,13 +18,14 @@ void f(void *arg) {
 }
 
 int main() {
-    int n;
-    void *arg;
-    for(n = 0; n < N; n++) {
-        arg = &n;
-        ThreadCreate(f, arg);
+    int i;
+    void* args[N];
+    for(i = 0; i < N; i++) {
+        args[i] = &i;
+        ThreadCreate(f, args[i]);
     }
     ThreadExit();
+    return 0;
 }
 
 #endif
