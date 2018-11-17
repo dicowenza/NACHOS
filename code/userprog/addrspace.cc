@@ -22,6 +22,7 @@
 #include "syscall.h"
 #ifdef CHANGED
 #include "synch.h"
+#include "bitmap.h"
 #endif
 #include "new"
 
@@ -67,6 +68,8 @@ AddrSpace::AddrSpace (OpenFile * executable)
 {
 
     #ifdef CHANGED
+    BitMap currentBitMap = new BitMap(256);
+    currentBitMap->Mark(0);
     mutex_cpt_thread = new Semaphore("mutex_cpt_thread", 1);
     #endif
     NoffHeader noffH;
@@ -210,9 +213,18 @@ AddrSpace::RestoreState ()
 //Initialize stack Pointer,
 //@return int address of new stack top address
 //-----------------------------------------------------------------------
-int AddrSpace::AllocateUserStack(int cptThread) {
+int 
+AddrSpace::AllocateUserStack(int cptThread) 
+{
     int sizeVirtualMemory = numPages * PageSize;
     // Calcul the user stack register (but subtract off a bit).
     return (sizeVirtualMemory - (cptThread * 256)) - 16;
+}
+
+int
+AddrSpace::BitMapFind()
+{
+    int n = currentBitMap->Find();
+    return n;
 }
 #endif
