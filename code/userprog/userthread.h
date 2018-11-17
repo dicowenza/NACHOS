@@ -7,7 +7,7 @@ typedef struct ThreadArgs {
 	int arg;
 } ThreadArgs;
 
-extern void do_ThreadCreate(int f, int arg);
+extern int do_ThreadCreate(int f, int arg);
 extern void do_ThreadExit();
 
 #endif

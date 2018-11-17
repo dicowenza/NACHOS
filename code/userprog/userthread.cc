@@ -16,17 +16,13 @@ int do_ThreadCreate(int f, int arg) {
 	DEBUG ('x', "[DEBUG] cptThread: %d\n", cptThread);
 	
 	int FindStack = currentThread->space->BitMapFind();
-	if (FindStack == -1){
-		return -1;
-	}
+	if (FindStack == -1) return -1;
 	
 	ThreadArgs *TArgs = (ThreadArgs *) malloc(sizeof(ThreadArgs));
 	TArgs->f = f;
 	TArgs->arg = arg;
 
-	int newThreadStack = currentThread->space->AllocateUserStack(FindStack)
-
-
+	int newThreadStack = currentThread->space->AllocateUserStack(FindStack);
 	Thread *newThread = new Thread("newThread");
 
 	currentThread->space->mutex_cpt_thread->P();

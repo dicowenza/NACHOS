@@ -18,6 +18,7 @@
 #include "translate.h"
 
 #ifdef CHANGED
+#include "bitmap.h"
 class Semaphore;
 #endif
 
@@ -28,6 +29,8 @@ class AddrSpace:dontcopythis
   public:
     #ifdef CHANGED
       int AllocateUserStack(int cptThread);
+      int BitMapFind();
+      BitMap *currentBitMap;
       Semaphore *mutex_cpt_thread;
     #endif
     AddrSpace (OpenFile * executable);	// Create an address space,
