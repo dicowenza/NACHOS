@@ -67,8 +67,10 @@ SwapHeader (NoffHeader * noffH)
 AddrSpace::AddrSpace (OpenFile * executable)
 {
     #ifdef CHANGED
-    currentBitMap = new BitMap(4);
+    int bmp_size = UserStacksAreaSize / PageSize + 1;
+    currentBitMap = new BitMap(bmp_size);
     currentBitMap->Mark(0);
+    mutex_bitmap = new Semaphore("mutex_bitmap", 1);
     mutex_cpt_thread = new Semaphore("mutex_cpt_thread", 1);
     #endif
     NoffHeader noffH;

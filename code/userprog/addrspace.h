@@ -31,6 +31,7 @@ class AddrSpace:dontcopythis
       int AllocateUserStack(int cptThread);
       int BitMapFind();
       BitMap *currentBitMap;
+      Semaphore *mutex_bitmap;
       Semaphore *mutex_cpt_thread;
     #endif
     AddrSpace (OpenFile * executable);	// Create an address space,

@@ -7,7 +7,6 @@
  */
 void f(void *arg) {
     int x = *((int *)arg);
-    PutString("We are in the thread t\n");
     PutString("The given arg of thread t function is : ");
     PutInt(x);
     PutString("\n");
@@ -19,8 +18,7 @@ int main() {
     void *arg = &x;
     PutString("Launch thread t from main\n");
 	ThreadCreate(f, arg);
-    PutString("We'll exit from main\n");
-    ThreadExit();
+    while(1) ;
 }
 
 #endif
