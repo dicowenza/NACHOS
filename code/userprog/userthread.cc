@@ -16,13 +16,13 @@ int do_ThreadCreate(int f, int arg) {
 	DEBUG ('x', "[DEBUG] cptThread: %d\n", cptThread);
 	
 	int FindStack = currentThread->space->BitMapFind();
+	currentThread->bitmap_location = FindStack;
 	if (FindStack == -1) return -1;
-	
+
 	ThreadArgs *TArgs = (ThreadArgs *) malloc(sizeof(ThreadArgs));
 	TArgs->f = f;
 	TArgs->arg = arg;
 
-	int newThreadStack = currentThread->space->AllocateUserStack(FindStack);
 	Thread *newThread = new Thread("newThread");
 
 	currentThread->space->mutex_cpt_thread->P();
@@ -30,8 +30,7 @@ int do_ThreadCreate(int f, int arg) {
 	currentThread->space->mutex_cpt_thread->V();
 	
 	newThread->Start(StartUserThread, TArgs);
-
-	return 1;
+	return 0;
 }
 
 
@@ -42,7 +41,8 @@ int do_ThreadCreate(int f, int arg) {
  */
 static void StartUserThread(void *argsStruct) {
 	ThreadArgs* TArgs = (ThreadArgs*) argsStruct;
-	int stacktopAdress = currentThread->space->AllocateUserStack(cptThread);
+	int stacktopAdress = currentThread
+		->space->AllocateUserStack(currentThread->bitmap_location);
 
 	for (int i = 0; i < NumTotalRegs; i++) {
 		machine->WriteRegister(i, 0);
@@ -70,6 +70,7 @@ void do_ThreadExit() {
 	if (cptThread == 0) {
 		interrupt->Halt();
 	}
+	currentThread->space->currentBitMap->Clear(currentThread->bitmap_location);
 	currentThread->Finish();
 }
 

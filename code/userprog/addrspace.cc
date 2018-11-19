@@ -67,7 +67,7 @@ SwapHeader (NoffHeader * noffH)
 AddrSpace::AddrSpace (OpenFile * executable)
 {
     #ifdef CHANGED
-    currentBitMap = new BitMap(256);
+    currentBitMap = new BitMap(4);
     currentBitMap->Mark(0);
     mutex_cpt_thread = new Semaphore("mutex_cpt_thread", 1);
     #endif

@@ -83,6 +83,9 @@ class Thread:dontcopythis
     unsigned long machineState[MachineStateSize];	// all registers except for stackTop
 
   public:
+    #ifdef CHANGED
+        int bitmap_location; // the position of the stack in bitmap
+    #endif
       Thread (const char *debugName);	// initialize a Thread 
      ~Thread ();		// deallocate a Thread
     // NOTE -- thread being deleted
