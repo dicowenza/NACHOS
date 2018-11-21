@@ -53,3 +53,5 @@ code/test/multithreads.coff
 code/test/multithreads
 code/test/makethread.coff
 code/test/makethread
+code/test/userpage0.coff
+code/test/userpage0
