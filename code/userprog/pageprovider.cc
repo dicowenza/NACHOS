@@ -1,14 +1,21 @@
 #ifdef CHANGED
+#include "pageprovider.h"
+#include "machine.h"
+#include "system.h"
+
+
+
+
 
 PageProvider::PageProvider() {
-    bitmap = new Bitmap(NumPhysPages);
+    bitmap = new BitMap(NumPhysPages);
 }
 
 PageProvider::~PageProvider() {
     delete bitmap;
 }
 
-int GetEmptyPage() {
+int PageProvider::GetEmptyPage() {
     int empty_page = bitmap->Find();
     int addr = (empty_page * PageSize);
     void *ptr = &(machine->mainMemory[addr]);
@@ -16,11 +23,11 @@ int GetEmptyPage() {
     return addr;
 }
 
-void ReleasePage(int page) {
+void PageProvider::ReleasePage(int page) {
     bitmap->Clear(page);
 }
 
-int NumAvailPage() {
+int PageProvider::NumAvailPage() {
     return bitmap->NumClear();
 }
 

@@ -157,6 +157,9 @@ AddrSpace::AddrSpace (OpenFile * executable)
 	   size - UserStacksAreaSize, UserStacksAreaSize);
 
     pageTable[0].valid = FALSE;			// Catch NULL dereference
+    #ifdef CHANGED
+    page=machine->pageprovider->GetEmptyPage();
+    #endif
 }
 
 //----------------------------------------------------------------------
@@ -170,6 +173,9 @@ AddrSpace::~AddrSpace ()
   // delete pageTable;
   delete [] pageTable;
   // End of modification
+   #ifdef CHANGED
+    machine->pageprovider->ReleasePage(page);
+    #endif
 }
 
 //----------------------------------------------------------------------
