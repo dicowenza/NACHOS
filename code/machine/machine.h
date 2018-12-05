@@ -25,6 +25,9 @@
 #include "utility.h"
 #include "translate.h"
 #include "disk.h"
+#ifdef CHANGED
+#include "pageprovider.h"
+#endif
 
 // Definitions related to the size, and format of user memory
 
@@ -84,8 +87,8 @@ class Instruction {
 
     unsigned int value; // binary representation of the instruction
 
-                     // Type of instruction.  This is NOT the same as the
-    		     // opcode field from the instruction: see defs in mips.h
+                // Type of instruction.  This is NOT the same as the
+    		    // opcode field from the instruction: see defs in mips.h
     unsigned char opCode;
                      // Three registers from instruction.
     unsigned char rs, rt, rd;
@@ -183,6 +186,9 @@ class Machine:dontcopythis {
 					// "read-only" to Nachos kernel code
 
     TranslationEntry *pageTable;
+	#ifdef CHANGED
+	PageProvider *pageprovider;
+	#endif
     unsigned int pageTableSize;
 
   private:

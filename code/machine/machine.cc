@@ -70,7 +70,9 @@ Machine::Machine(bool debug)
     tlb = NULL;
     pageTable = NULL;
 #endif
-
+    #ifdef CHANGED
+        pageprovider = new PageProvider();
+    #endif
     singleStep = debug;
     runUntilTime = 0;
     CheckEndian();
@@ -83,6 +85,9 @@ Machine::Machine(bool debug)
 
 Machine::~Machine()
 {
+    #ifdef CHANGED
+        delete pageprovider;
+    #endif
     delete [] mainMemory;
     if (tlb != NULL)
         delete [] tlb;

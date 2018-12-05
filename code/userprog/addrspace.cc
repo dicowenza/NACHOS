@@ -45,7 +45,6 @@ TranslationEntry *pageTable, unsigned int numPages) {
 
     machine->pageTable = saved_pageTable;
     machine->pageTableSize = saved_pageTableSize;
-
 }
 #endif
 
@@ -126,8 +125,10 @@ AddrSpace::AddrSpace (OpenFile * executable)
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++)
       {
-	  pageTable[i].physicalPage = i;	// for now, phys page # = virtual page #
-	  pageTable[i].valid = TRUE;
+      #ifdef CHANGED
+	  pageTable[i].physicalPage = i+1;	// for now, phys page # = virtual page # + 1
+	  #endif
+      pageTable[i].valid = TRUE;
 	  pageTable[i].use = FALSE;
 	  pageTable[i].dirty = FALSE;
 	  pageTable[i].readOnly = FALSE;	// if the code segment was entirely on
