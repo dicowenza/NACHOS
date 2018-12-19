@@ -42,12 +42,14 @@ UpdatePC ()
     pc += 4;
     machine->WriteRegister (NextPCReg, pc);
 }
-
+#ifdef CHANGED
 static void StartForkProcess(void *arg) {
 	currentThread->space->InitRegisters();
 	currentThread->space->RestoreState();
 	machine->Run();
 }
+static int procCounter = 0;
+#endif
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -149,7 +151,13 @@ void ExceptionHandler (ExceptionType which) {
 					DEBUG('s', "Debug main return with int %d\n", main_ret);
 					int status = machine->ReadRegister(2);
 					DEBUG('s', "Debug Exit with code %d\n", status);
-					interrupt->Halt();
+					procCounter--;
+					if (procCounter == 0)
+						interrupt->Halt();
+					else {
+						delete currentThread->space;
+						currentThread->Finish();
+					}
 					break;
 				}
 				case SC_PutInt:
@@ -197,6 +205,7 @@ void ExceptionHandler (ExceptionType which) {
 						printf ("Unable to open file %s\n", exec_str);
 						res = -1;
 					} else {
+						procCounter++;
 						AddrSpace *space = new AddrSpace(executable);
 						// Launch the kernel thread
 						Thread *t = new Thread("ForkExec");

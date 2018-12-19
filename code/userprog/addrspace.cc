@@ -158,7 +158,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
 
     pageTable[0].valid = FALSE;			// Catch NULL dereference
     #ifdef CHANGED
-    page=machine->pageprovider->GetEmptyPage();
+    page = machine->pageprovider->GetEmptyPage();
     #endif
 }
 
@@ -169,13 +169,14 @@ AddrSpace::AddrSpace (OpenFile * executable)
 
 AddrSpace::~AddrSpace ()
 {
-  // LB: Missing [] for delete
-  // delete pageTable;
-  delete [] pageTable;
-  // End of modification
-   #ifdef CHANGED
-    machine->pageprovider->ReleasePage(page);
+    #ifdef CHANGED
+        machine->pageprovider->ReleasePage(page);
     #endif
+    // LB: Missing [] for delete
+    // delete pageTable;
+    delete [] pageTable;
+    // End of modification
+
 }
 
 //----------------------------------------------------------------------
