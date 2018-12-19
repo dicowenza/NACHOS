@@ -55,3 +55,5 @@ code/test/makethread.coff
 code/test/makethread
 code/test/userpage0.coff
 code/test/userpage0
+code/test/forkexec
+code/test/forkexec.coff

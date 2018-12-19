@@ -43,6 +43,11 @@ UpdatePC ()
     machine->WriteRegister (NextPCReg, pc);
 }
 
+static void StartForkProcess(void *arg) {
+	currentThread->space->InitRegisters();
+	currentThread->space->RestoreState();
+	machine->Run();
+}
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -164,7 +169,7 @@ void ExceptionHandler (ExceptionType which) {
 
 				case SC_ThreadCreate:
 				{
-					DEBUG('s', "threadCreate\n");
+					DEBUG('s', "Debug ThreadCreate\n");
 					int f = machine->ReadRegister(4);
 					int arg = machine->ReadRegister(5);
 					do_ThreadCreate(f, arg);
@@ -172,11 +177,39 @@ void ExceptionHandler (ExceptionType which) {
 				}
 				case SC_ThreadExit:
 				{
-          			DEBUG ('s', "threadExit\n");
+          			DEBUG ('s', "Debug ThreadExit\n");
           			do_ThreadExit();
           			break;
 				}
 				#endif
+				case SC_ForkExec:
+				{
+					printf("yolo\n");
+					DEBUG ('s', "Debug ForkExec\n");
+					int str_addr = machine->ReadRegister(4); // Recover addr argument
+					int MAX_STR_SIZE_EXEC = 512;
+					char *exec_str = new char[MAX_STR_SIZE_EXEC];
+					copyStringFromMachine(str_addr, exec_str, MAX_STR_SIZE_EXEC);
+					
+					int res = 0;
+					OpenFile *executable = fileSystem->Open(exec_str);
+					if (executable == NULL) {
+						printf ("Unable to open file %s\n", exec_str);
+						res = -1;
+					} else {
+						AddrSpace *space = new AddrSpace(executable);
+						// Launch the kernel thread
+						Thread *t = new Thread("ForkExec");
+						t->space = space;
+						t->Start(StartForkProcess, (void*) 0);
+						currentThread->Yield();
+					}
+
+					machine->WriteRegister(2, res);
+					delete executable;
+					delete exec_str;
+					break;
+				}
 				default:
 				{
 					printf("Unimplemented system call %d\n", type);

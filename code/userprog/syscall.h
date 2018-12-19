@@ -41,6 +41,8 @@
 
 #define SC_ThreadCreate 17
 #define SC_ThreadExit 18
+
+#define SC_ForkExec 19
 #endif
 
 #ifdef IN_USER_MODE
@@ -151,6 +153,8 @@ int GetInt();
 
 int ThreadCreate(void (*f)(void*), void *arg);
 void ThreadExit();
+
+int ForkExec(const char *s);
 #endif
 
 #endif // IN_USER_MODE

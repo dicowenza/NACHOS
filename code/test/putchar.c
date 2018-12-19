@@ -37,7 +37,7 @@ void get() {
 
 int main() {
 	print('a', 4);
-	get();
+	//get();
 	return 0;
 }
 
