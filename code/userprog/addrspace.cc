@@ -119,6 +119,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
     if (numPages > NumPhysPages)
 	    throw std::bad_alloc();
 
+
     DEBUG ('a', "Initializing address space, num pages %d, total size 0x%x\n",
 	   numPages, size);
 // first, set up the translation
@@ -126,7 +127,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
     for (i = 0; i < numPages; i++)
       {
       #ifdef CHANGED
-	  pageTable[i].physicalPage = i+1;	// for now, phys page # = virtual page # + 1
+	  pageTable[i].physicalPage = machine->pageprovider->GetEmptyPage();
 	  #endif
       pageTable[i].valid = TRUE;
 	  pageTable[i].use = FALSE;
@@ -157,9 +158,7 @@ AddrSpace::AddrSpace (OpenFile * executable)
 	   size - UserStacksAreaSize, UserStacksAreaSize);
 
     pageTable[0].valid = FALSE;			// Catch NULL dereference
-    #ifdef CHANGED
-    page = machine->pageprovider->GetEmptyPage();
-    #endif
+    
 }
 
 //----------------------------------------------------------------------
@@ -170,7 +169,9 @@ AddrSpace::AddrSpace (OpenFile * executable)
 AddrSpace::~AddrSpace ()
 {
     #ifdef CHANGED
-        machine->pageprovider->ReleasePage(page);
+        for (unsigned int i = 0; i < numPages; i++) {
+            machine->pageprovider->ReleasePage(pageTable[i].physicalPage);
+        }
     #endif
     // LB: Missing [] for delete
     // delete pageTable;
