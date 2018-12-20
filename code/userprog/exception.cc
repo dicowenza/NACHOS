@@ -152,9 +152,9 @@ void ExceptionHandler (ExceptionType which) {
 					int status = machine->ReadRegister(2);
 					DEBUG('s', "Debug Exit with code %d\n", status);
 					procCounter--;
-					if (procCounter == 0)
+					if (procCounter == 0) {
 						interrupt->Halt();
-					else {
+					} else {
 						delete currentThread->space;
 						currentThread->Finish();
 					}
@@ -190,14 +190,14 @@ void ExceptionHandler (ExceptionType which) {
           			break;
 				}
 				#endif
+
 				case SC_ForkExec:
 				{
-					printf("yolo\n");
 					DEBUG ('s', "Debug ForkExec\n");
 					int str_addr = machine->ReadRegister(4); // Recover addr argument
-					int MAX_STR_SIZE_EXEC = 512;
-					char *exec_str = new char[MAX_STR_SIZE_EXEC];
-					copyStringFromMachine(str_addr, exec_str, MAX_STR_SIZE_EXEC);
+					int MAX_PATH_SIZE = 512;
+					char *exec_str = new char[MAX_PATH_SIZE];
+					copyStringFromMachine(str_addr, exec_str, MAX_PATH_SIZE);
 					
 					int res = 0;
 					OpenFile *executable = fileSystem->Open(exec_str);
@@ -207,7 +207,6 @@ void ExceptionHandler (ExceptionType which) {
 					} else {
 						procCounter++;
 						AddrSpace *space = new AddrSpace(executable);
-						// Launch the kernel thread
 						Thread *t = new Thread("ForkExec");
 						t->space = space;
 						t->Start(StartForkProcess, (void*) 0);

@@ -20,7 +20,8 @@ int PageProvider::GetEmptyPage() {
     return addr;
 }
 
-void PageProvider::ReleasePage(int page) {
+void PageProvider::ReleasePage(int addr) {
+    int page = addr / PageSize;
     bitmap->Clear(page);
 }
 
